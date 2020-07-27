@@ -8,34 +8,36 @@ use Encode;
 use open IO => ":utf8";
 binmode(STDOUT, ":utf8");
 
-if(@ARGV < 1) {
-  print "usage : tiny-html5lint.pl tariget-html\n";
-  exit;
-}
-print "$ARGV[0]\n";
+if($0 eq __FILE__) {
+  if(@ARGV < 1) {
+    print "usage : tiny-html5lint.pl tariget-html\n";
+    exit;
+  }
+  print "$ARGV[0]\n";
 
-my $fh;
-open $fh, '<', $ARGV[0] or die $!;
-my $line = 1;
-my $column = 1;
-my $state = "text";
-my $error;
-while(my $c = getc($fh)) {
-  my $type = judge_type($c);
-  ($state, $error) = transite_state($state, $type);
-  if($error ne "") {
-    print "$error($line:$column)\n";
-  }
+  my $fh;
+  open $fh, '<', $ARGV[0] or die $!;
+  my $line = 1;
+  my $column = 1;
+  my $state = "text";
+  my $error;
+  while(my $c = getc($fh)) {
+    my $type = judge_type($c);
+    ($state, $error) = transite_state($state, $type);
+    if($error ne "") {
+      print "$error($line:$column)\n";
+    }
 
-  if($c eq "\n") {
-    $line++;
-    $column = 1;
+    if($c eq "\n") {
+      $line++;
+      $column = 1;
+    }
+    else {
+      $column++;
+    }
   }
-  else {
-    $column++;
-  }
+  close $fh;
 }
-close $fh;
 
 sub transite_state {
   my ($state, $type) = @_;
@@ -145,3 +147,5 @@ sub judge_type {
     return 'other';
   }
 }
+
+1;

@@ -22,7 +22,6 @@ my $state = "text";
 my $error;
 while(my $c = getc($fh)) {
   my $type = judge_type($c);
-#  print "$c ($state, $type)\n";
   ($state, $error) = transite_state($state, $type);
   if($error ne "") {
     print "$error($line:$column)\n";

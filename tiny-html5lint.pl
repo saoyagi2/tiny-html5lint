@@ -18,16 +18,27 @@ if($0 eq __FILE__) {
   open my $fh, '<', $ARGV[0] or die $!;
   my $buffer = join('', <$fh>);
   close $fh;
+  my $result_ref = html5lint($buffer);
+  print $result_ref->{'message'};
+  exit $result_ref->{'code'};
+}
 
+sub html5lint {
+  my $buffer = shift;
   my $line = 1;
   my $column = 1;
   my $state = "text";
   my $error;
+  my %result = (
+    'code' => 0,
+    'message' => ''
+  );
   foreach my $c (split(//, $buffer)) {
     my $type = judge_type($c);
     ($state, $error) = transite_state($state, $type);
     if($error ne "") {
-      print "$error($line:$column)\n";
+      $result{'message'} .= "$error($line:$column)\n";
+      $result{'code'} = 1;
     }
 
     if($c eq "\n") {
@@ -38,6 +49,7 @@ if($0 eq __FILE__) {
       $column++;
     }
   }
+  return \%result;
 }
 
 sub transite_state {

@@ -15,13 +15,15 @@ if($0 eq __FILE__) {
   }
   print "$ARGV[0]\n";
 
-  my $fh;
-  open $fh, '<', $ARGV[0] or die $!;
+  open my $fh, '<', $ARGV[0] or die $!;
+  my $buffer = join('', <$fh>);
+  close $fh;
+
   my $line = 1;
   my $column = 1;
   my $state = "text";
   my $error;
-  while(my $c = getc($fh)) {
+  foreach my $c (split(//, $buffer)) {
     my $type = judge_type($c);
     ($state, $error) = transite_state($state, $type);
     if($error ne "") {
@@ -36,7 +38,6 @@ if($0 eq __FILE__) {
       $column++;
     }
   }
-  close $fh;
 }
 
 sub transite_state {

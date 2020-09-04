@@ -39,6 +39,18 @@ HTML
   );
   is($result_ref->{'code'}, 1, "html5lint exit code 'tag borken html'");
   is($result_ref->{'message'}, "unexpect charactor(3:1)\n", "html5lint message 'tag borken html'");
+
+  # tag broken html
+  $result_ref = html5lint(<<"HTML"
+<!DOCTYPE html>
+<html>
+<body>
+</boty>>
+</html>
+HTML
+  );
+  is($result_ref->{'code'}, 1, "html5lint exit code 'tag borken html'");
+  is($result_ref->{'message'}, "unexpect charactor(4:8)\n", "html5lint message 'tag borken html'");
 }
 
 # judge_type

@@ -104,7 +104,6 @@ sub transite_state {
     "attributevalue2_decimal" => "attributevalue2",
     "attributevalue2_other" => "attributevalue2",
     "text_starttag" => "starttag",
-    "text_endtag" => "text",
     "text_equal" => "text",
     "text_singlequote" => "text",
     "text_doublequote" => "text",
@@ -119,7 +118,12 @@ sub transite_state {
     return ($transite_matrix->{"${state}_${type}"}, "");
   }
   else {
-    return('text', 'unexpect charactor');
+    if(defined($transite_matrix->{"text_${type}"})) {
+      return ($transite_matrix->{"text_${type}"}, 'unexpect charactor');
+    }
+    else {
+      return('text', 'unexpect charactor');
+    }
   }
 }
 

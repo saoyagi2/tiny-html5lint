@@ -21,6 +21,7 @@ HTML
 <!DOCTYPE html>
 <html>
 <body>
+<br />
 </boty>
 </html>
 HTML
@@ -69,8 +70,6 @@ HTML
   is($type, 'doublequote', '"\"" is doublequote');
   $type = judge_type('/');
   is($type, 'slash', '"/" is slash');
-  $type = judge_type('!');
-  is($type, 'exclamation', '"!" is exclamation');
   $type = judge_type(' ');
   is($type, 'whitespace', '" " is whitespace');
   $type = judge_type("\t");
@@ -78,9 +77,11 @@ HTML
   $type = judge_type("\n");
   is($type, 'whitespace', '\\n is whitespace');
   $type = judge_type('a');
-  is($type, 'alphabet', '"a" is alphabet');
+  is($type, 'other', '"a" is other');
   $type = judge_type('1');
-  is($type, 'decimal', '"1" is decimal');
+  is($type, 'other', '"1" is other');
   $type = judge_type('$');
   is($type, 'other', '"$" is other');
+  $type = judge_type('!');
+  is($type, 'other', '"!" is other');
 }

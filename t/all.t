@@ -20,7 +20,7 @@ HTML
   $result_ref = html5lint(<<"HTML"
 <!DOCTYPE html>
 <html>
-<body>
+<body id = "contaner">
 <br />
 </boty>
 </html>

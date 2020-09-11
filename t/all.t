@@ -21,6 +21,8 @@ HTML
 <!DOCTYPE html>
 <html>
 <body id = "contaner">
+<div class=red>
+</div>
 <br />
 </boty>
 </html>

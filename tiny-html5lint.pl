@@ -99,8 +99,6 @@ sub transite_state {
     "attributevalue2_other" => "attributevalue2",
     "text_starttag" => "starttag",
     "text_equal" => "text",
-    "text_singlequote" => "text",
-    "text_doublequote" => "text",
     "text_slash" => "text",
     "text_whitespace" => "text",
     "text_other" => "text"
